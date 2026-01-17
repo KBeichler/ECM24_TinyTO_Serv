@@ -5,7 +5,7 @@
 module serv_ram32_if
   #(    
     parameter	    rf_width = 32,
-    parameter	    rf_l2d = $clog2(32/rf_width))
+    parameter	    rf_l2d = $clog2(rf_width))
   (
    input wire                 i_clk,
    
@@ -26,12 +26,9 @@ module serv_ram32_if
 );
   
   // Read logic: Direct 32-bit passthrough
-  always_comb begin
-    if (i_rf_ren) 
-      o_rf_rdata <= i_ram_dout;  
-  end
-  
+  assign o_rf_rdata = i_ram_dout;
   // RAM32 control - full 32-bit operations
+
   assign o_ram_addr = i_rf_wen ? i_rf_waddr : i_rf_raddr;
   assign o_ram_din = i_rf_wdata;
   assign o_ram_we = i_rf_wen ? 4'b1111 : 4'b0000;

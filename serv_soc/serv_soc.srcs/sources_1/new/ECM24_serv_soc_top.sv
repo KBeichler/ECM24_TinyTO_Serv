@@ -23,7 +23,7 @@ module ECM24_serv_soc_top
    //=============================================================================
    // Parameters
    //=============================================================================
-   parameter memfile = "hello_uart.hex";  // Initial memory content file
+   parameter memfile = "";  // Initial memory content file
    parameter memsize = 8192;               // RAM size in bytes
    parameter reset_strategy = "MINI";      // Reset strategy for RAM
    parameter width = 1;                    // SERV CPU width (bit-serial)
@@ -36,7 +36,7 @@ module ECM24_serv_soc_top
    localparam [0:0] with_mdu = 1'b0;      // MDU (multiply/divide) disabled
    localparam csr_regs = with_csr*4;      // Number of CSR registers
    localparam rf_width = 32;              // Register file width
-   localparam rf_l2d = $clog2((32+csr_regs)*32/rf_width);  // Register file depth
+   localparam rf_l2d = $clog2(rf_width);  // Register file depth
 
    //=============================================================================
    // Wishbone Memory Bus Signals (CPU <-> RAM)
@@ -139,6 +139,7 @@ module ECM24_serv_soc_top
       .A0  (ram32_addr),
       .Di0 (ram32_din),
       .Do0 (ram32_dout));
+
 
    //=============================================================================
    // SERV CPU Core - Bit-serial RISC-V CPU
