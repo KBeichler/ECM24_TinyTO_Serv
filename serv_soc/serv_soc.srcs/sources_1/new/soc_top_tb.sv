@@ -8,7 +8,7 @@ module soc_top_tb;
    parameter compressed = 0;
    parameter align = compressed;
    
-   localparam baud_rate = 57600;
+   localparam baud_rate = 57600*2;
 
    reg wb_clk = 1'b0;
    reg wb_rst = 1'b1;

@@ -24,7 +24,13 @@ module ECM24_serv_soc_top
 (
  input wire  wb_clk,
  input wire  wb_rst,
- output wire q);
+ output wire q,
+ input wire MISO,
+ output wire MOSI,
+ output wire spi_clk,
+ output wire spi_cs1,
+ output wire spi_cs2
+);
 
    parameter memfile = "hello_uart.hex";
    parameter memsize = 8192;
@@ -42,7 +48,7 @@ module ECM24_serv_soc_top
    localparam	   aw = $clog2(memsize);
    localparam	   csr_regs = with_csr*4;
 
-   localparam	   rf_width = 32 ;//32;// width * 2;
+   localparam	   rf_width = 32 ;
    localparam	   rf_l2d   = $clog2((32+csr_regs)*32/rf_width);
 
    wire [31:0] 	wb_mem_adr;
