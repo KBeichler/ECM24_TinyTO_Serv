@@ -151,9 +151,7 @@ module servile
 
 
    serv_rf_ram_if
-     #(.width    (rf_width),
-       .W        (width),
-       .reset_strategy (reset_strategy),
+     #(//reset_strategy (reset_strategy),
        .csr_regs (with_csr*4))
    rf_ram_if
      (.i_clk    (i_clk),

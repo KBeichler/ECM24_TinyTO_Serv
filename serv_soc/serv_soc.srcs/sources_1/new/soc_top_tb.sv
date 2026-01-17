@@ -1,22 +1,24 @@
+`timescale 1ns / 1ps
 `default_nettype none
 module soc_top_tb;
 
-   parameter memfile = "hello_uart.hex";
+   parameter memfile = "blinky.hex";
    parameter memsize = 8192;
    parameter width = 1;
    parameter with_csr = 0;
    parameter compressed = 0;
    parameter align = compressed;
    
-   localparam baud_rate = 57600*2;
+   localparam baud_rate = 57600;
 
    reg wb_clk = 1'b0;
    reg wb_rst = 1'b1;
 
    wire q;
 
+   // 16 MHZ clock
    always  #31 wb_clk <= !wb_clk;
-   initial #62 wb_rst <= 1'b0;
+   initial #124 wb_rst <= 1'b0;
 
 
    uart_decoder #(baud_rate) uart_decoder (q);

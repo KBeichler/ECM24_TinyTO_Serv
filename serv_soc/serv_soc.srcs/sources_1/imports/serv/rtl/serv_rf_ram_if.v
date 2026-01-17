@@ -7,7 +7,7 @@
 `default_nettype none
 module serv_rf_ram_if
   #(//Data width. Adjust to preferred width of SRAM data interface
-    parameter width=8,
+    parameter width=32,
 
     parameter W = 1,
     //Select reset strategy.
