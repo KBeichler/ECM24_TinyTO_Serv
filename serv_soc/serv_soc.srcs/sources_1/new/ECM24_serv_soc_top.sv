@@ -1,56 +1,46 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Module: ECM24_serv_soc_top
+// Description: SERV RISC-V SoC top-level module
+//              Integrates SERV CPU core with RAM and GPIO peripherals
 // 
 // Create Date: 17.01.2026 11:15:30
-// Design Name: 
-// Module Name: ECM24_serv_soc_top
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module ECM24_serv_soc_top
 (
- input wire  wb_clk,
- input wire  wb_rst,
- output wire q,
- input wire MISO,
- output wire MOSI,
+ input wire  wb_clk,    // Wishbone clock
+ input wire  wb_rst,    // Wishbone reset
+ output wire q,          // GPIO output
+
+ input wire spi_miso,
+ output wire spi_mosi,
  output wire spi_clk,
  output wire spi_cs1,
  output wire spi_cs2
 );
 
-   parameter memfile = "hello_uart.hex";
-   parameter memsize = 8192;
-   parameter reset_strategy = "MINI";
-   parameter width = 1;
-   parameter sim = 0;
-   parameter [0:0] debug = 1'b0;
-   parameter with_csr = 0;
-   parameter [0:0] compress = 0;
-   parameter [0:0] align = compress;
+   //=============================================================================
+   // Parameters
+   //=============================================================================
+   parameter memfile = "hello_uart.hex";  // Initial memory content file
+   parameter memsize = 8192;               // RAM size in bytes
+   parameter reset_strategy = "MINI";      // Reset strategy for RAM
+   parameter width = 1;                    // SERV CPU width (bit-serial)
+   parameter sim = 0;                      // Simulation mode flag
+   parameter [0:0] debug = 1'b0;          // Enable debug features
+   parameter with_csr = 0;                 // Include CSR support
+   parameter [0:0] compress = 0;          // Enable compressed instructions
+   parameter [0:0] align = compress;      // Alignment configuration
 
-   localparam [0:0] with_mdu = 1'b0;
+   localparam [0:0] with_mdu = 1'b0;      // MDU (multiply/divide) disabled
+   localparam csr_regs = with_csr*4;      // Number of CSR registers
+   localparam rf_width = 32;              // Register file width
+   localparam rf_l2d = $clog2((32+csr_regs)*32/rf_width);  // Register file depth
 
-
-   localparam	   aw = $clog2(memsize);
-   localparam	   csr_regs = with_csr*4;
-
-   localparam	   rf_width = 32 ;
-   localparam	   rf_l2d   = $clog2((32+csr_regs)*32/rf_width);
-
+   //=============================================================================
+   // Wishbone Memory Bus Signals (CPU <-> RAM)
+   //=============================================================================
    wire [31:0] 	wb_mem_adr;
    wire [31:0] 	wb_mem_dat;
    wire [3:0] 	wb_mem_sel;
@@ -59,7 +49,9 @@ module ECM24_serv_soc_top
    wire [31:0] 	wb_mem_rdt;
    wire 	   wb_mem_ack;
 
-
+   //=============================================================================
+   // Wishbone External Bus Signals (CPU <-> Peripherals)
+   //=============================================================================
    wire [31:0]	   wb_ext_adr;
    wire [31:0]	   wb_ext_dat;
    wire [3:0]	   wb_ext_sel;
@@ -68,6 +60,9 @@ module ECM24_serv_soc_top
    wire [31:0]	   wb_ext_rdt;
    wire		   wb_ext_ack;
 
+   //=============================================================================
+   // Register File Signals (CPU <-> RF RAM)
+   //=============================================================================
    wire [rf_l2d-1:0]   rf_waddr;
    wire [rf_width-1:0] rf_wdata;
    wire		           rf_wen;
@@ -75,7 +70,9 @@ module ECM24_serv_soc_top
    wire		           rf_ren;
    wire [rf_width-1:0] rf_rdata;
 
-
+   //=============================================================================
+   // RAM Module - Main memory for the SoC
+   //=============================================================================
    servant_ram
      #(.memfile (memfile),
        .depth (memsize),
@@ -92,7 +89,9 @@ module ECM24_serv_soc_top
       .o_wb_rdt (wb_mem_rdt),
       .o_wb_ack (wb_mem_ack));
 
-
+   //=============================================================================
+   // GPIO Module - Simple GPIO peripheral for output
+   //=============================================================================
    subservient_gpio gpio
      (.i_wb_clk (wb_clk),
       .i_wb_rst (wb_rst),
@@ -103,29 +102,47 @@ module ECM24_serv_soc_top
       .o_wb_ack (wb_ext_ack),
       .o_gpio   (q));
 
-/*
-   serv_rf_ram
-     #(.width (rf_width),
-       .csr_regs (csr_regs))
-   rf_ram
-     (.i_clk    (wb_clk),
-      .i_waddr  (rf_waddr),
-      .i_wdata  (rf_wdata),
-      .i_wen    (rf_wen),
-      .i_raddr  (rf_raddr),
-      .i_ren    (rf_ren),
-      .o_rdata  (rf_rdata));
-      */
-     RAM32 my_rf_ram (
-        .CLK(wb_clk),
-        .WE0(rf_wen),
-        .RE0(rf_ren),
-        .RA0(rf_raddr),
-        .WA0(rf_waddr),
-        .Di0(rf_wdata),
-        .Do0(rf_rdata)
-    );
+   //=============================================================================
+   // Register File RAM - RAM32 macro with interface
+   //=============================================================================
+   
+   // RAM32 Interface signals
+   wire [4:0]  ram32_addr;
+   wire [31:0] ram32_din;
+   wire [3:0]  ram32_we;
+   wire        ram32_en;
+   wire [31:0] ram32_dout;
 
+   // RAM32 Interface Module
+   serv_ram32_if 
+     #(.rf_width (rf_width),
+       .rf_l2d   (rf_l2d))
+   rf_if
+     (.i_clk      (wb_clk),
+      .i_rf_waddr (rf_waddr),
+      .i_rf_wdata (rf_wdata),
+      .i_rf_wen   (rf_wen),
+      .i_rf_raddr (rf_raddr),
+      .o_rf_rdata (rf_rdata),
+      .i_rf_ren   (rf_ren),
+      .o_ram_addr (ram32_addr),
+      .o_ram_din  (ram32_din),
+      .o_ram_we   (ram32_we),
+      .o_ram_en   (ram32_en),
+      .i_ram_dout (ram32_dout));
+
+   // RAM32 Macro Instance
+   RAM32 rf_ram
+     (.CLK (wb_clk),
+      .WE0 (ram32_we),
+      .EN0 (ram32_en),
+      .A0  (ram32_addr),
+      .Di0 (ram32_din),
+      .Do0 (ram32_dout));
+
+   //=============================================================================
+   // SERV CPU Core - Bit-serial RISC-V CPU
+   //=============================================================================
    servile
      #(.width    (width),
        .sim      (0),
