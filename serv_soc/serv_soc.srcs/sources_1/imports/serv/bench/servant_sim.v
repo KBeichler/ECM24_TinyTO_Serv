@@ -20,7 +20,7 @@ module servant_sim
 	$readmemh(firmware_file, dut.ram.mem);
      end
 
-   servant
+   ECM24_serv_soc_top
      #(.memfile  (memfile),
        .memsize  (memsize),
        .width    (width),

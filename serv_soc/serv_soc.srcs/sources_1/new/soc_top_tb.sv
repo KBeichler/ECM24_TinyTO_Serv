@@ -1,5 +1,5 @@
 `default_nettype none
-module servant_tb;
+module soc_top_tb;
 
    parameter memfile = "hello_uart.hex";
    parameter memsize = 8192;
