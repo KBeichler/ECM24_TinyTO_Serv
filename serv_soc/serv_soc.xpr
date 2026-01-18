@@ -36,7 +36,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="zybo"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="161"/>
+    <Option Name="WTXSimLaunchSim" Val="166"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -327,12 +327,6 @@
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../example_program/hello_uart.hex"/>
           <Attr Name="ImportTime" Val="1767365477"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/imports/example_program/blinky.hex">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../example_program/blinky.hex"/>
-          <Attr Name="ImportTime" Val="1768657051"/>
         </FileInfo>
       </File>
       <Config>

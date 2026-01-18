@@ -23,7 +23,7 @@ module subservient_gpio
 
       if (i_wb_rst) begin
 	 o_wb_ack <= 1'b0;
-	 o_gpio   <= 1'b0;
+	 //o_gpio   <= 1'b0;
       end
    end
 endmodule

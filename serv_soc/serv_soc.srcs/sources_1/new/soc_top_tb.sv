@@ -2,7 +2,7 @@
 `default_nettype none
 module soc_top_tb;
 
-   parameter memfile = "blinky.hex";
+   parameter memfile = "hello_uart.hex";
    parameter memsize = 8192;
    parameter width = 1;
    parameter with_csr = 0;
