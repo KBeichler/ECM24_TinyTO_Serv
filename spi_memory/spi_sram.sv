@@ -40,17 +40,17 @@ state_t state_next;
 assign shift_enable = (state_reg ==  S_SHIFT_CMD) || (state_reg ==  S_SHIFT_ADDR) ||
                       (state_reg ==  S_SHIFT_WRITE_DATA) || (state_reg ==  S_SHIFT_READ_DATA);
                       
-assign write_full_word = (sel == 4'b1111) || ((sel == 4'b0000));
-assign write_first_half = (sel == 4'b0011);
-assign write_second_half = (sel == 4'b1100);
-assign write_byte_1 = (sel == 4'b0001);
-assign write_byte_2 = (sel == 4'b0010);
-assign write_byte_3 = (sel == 4'b0100);
-assign write_byte_4 = (sel == 4'b1000);
+assign write_full_word = (sel == 4'b1111) || ((sel == 4'b0000)) && we;
+assign write_first_half = (sel == 4'b0011) && we;
+assign write_second_half = (sel == 4'b1100) && we;
+assign write_byte_1 = (sel == 4'b0001) && we;
+assign write_byte_2 = (sel == 4'b0010) && we;
+assign write_byte_3 = (sel == 4'b0100) && we;
+assign write_byte_4 = (sel == 4'b1000) && we;
 
-assign shift_32_bits = write_full_word;
-assign shift_16_bits = write_first_half || write_second_half;
-assign shift_8_bits = write_byte_1 || write_byte_2 || write_byte_3 || write_byte_4;
+assign shift_32_bits = write_full_word && we;
+assign shift_16_bits = write_first_half || write_second_half && we;
+assign shift_8_bits = write_byte_1 || write_byte_2 || write_byte_3 || write_byte_4 && we;
 
 assign byte_adr = (adr << 2);   // convert word-address to byte address (*4)
 
@@ -92,7 +92,7 @@ begin
                 end
 
             S_LOAD_ADDR : begin
-                if(write_full_word || write_second_half || write_byte_4)
+                if(write_full_word || write_second_half || write_byte_4 || ~we)
                     data_reg[15:0] <= byte_adr; 
                 if(write_byte_3)
                     data_reg[15:0] <= {byte_adr[15:2], 2'b01};  //byte_adr + 1
