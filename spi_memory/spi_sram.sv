@@ -1,5 +1,14 @@
 `timescale 1ns / 1ps
 
+// Author:      David Hetzenauer (ESE24)
+// Date:        2025.01.21
+// Company:     FH Joanneum
+// Project:     TT SerV Core
+// Description: Wishbone interface for external SPI memory chips
+// Hardware:
+// - 23LC512 SRAM (Read and Write access)
+// - 25LC640A EEPROM (Only Read access)
+
 module spi_sram (
     input wire clk,
     input wire rst_n,
@@ -24,8 +33,26 @@ typedef enum logic [3:0] {S_IDLE, S_LOAD_CMD, S_SHIFT_CMD, S_LOAD_ADDR, S_SHIFT_
     
 logic [5:0] cycle_counter;
 logic [31:0] data_reg;
+logic [15:0] byte_adr;
 state_t state_reg;
 state_t state_next;
+
+assign shift_enable = (state_reg ==  S_SHIFT_CMD) || (state_reg ==  S_SHIFT_ADDR) ||
+                      (state_reg ==  S_SHIFT_WRITE_DATA) || (state_reg ==  S_SHIFT_READ_DATA);
+                      
+assign write_full_word = (sel == 4'b1111) || ((sel == 4'b0000));
+assign write_first_half = (sel == 4'b0011);
+assign write_second_half = (sel == 4'b1100);
+assign write_byte_1 = (sel == 4'b0001);
+assign write_byte_2 = (sel == 4'b0010);
+assign write_byte_3 = (sel == 4'b0100);
+assign write_byte_4 = (sel == 4'b1000);
+
+assign shift_32_bits = write_full_word;
+assign shift_16_bits = write_first_half || write_second_half;
+assign shift_8_bits = write_byte_1 || write_byte_2 || write_byte_3 || write_byte_4;
+
+assign byte_adr = (adr << 2);   // convert word-address to byte address (*4)
 
 // state register
 always_ff @(posedge clk or negedge rst_n)
@@ -36,11 +63,6 @@ begin
         state_reg <= state_next;    
     end
 end
-
-// enable shift register
-assign shift_enable = (state_reg ==  S_SHIFT_CMD) || (state_reg ==  S_SHIFT_ADDR) ||
-                      (state_reg ==  S_SHIFT_WRITE_DATA) || (state_reg ==  S_SHIFT_READ_DATA);
-                      
 
 // cycle counter
 always_ff @(posedge clk or negedge rst_n)
@@ -70,7 +92,15 @@ begin
                 end
 
             S_LOAD_ADDR : begin
-                data_reg[15:2] <= adr; // convert word-address to byte address (*4)
+                if(write_full_word || write_second_half || write_byte_4)
+                    data_reg[15:0] <= byte_adr; 
+                if(write_byte_3)
+                    data_reg[15:0] <= {byte_adr[15:2], 2'b01};  //byte_adr + 1
+                if(write_first_half || write_byte_2)
+                    data_reg[15:0] <= {byte_adr[15:2], 2'b10};  //byte_adr + 2
+                if(write_byte_1)
+                    data_reg[15:0] <= {byte_adr[15:2], 2'b11};  //byte_adr + 3
+                
                 end
                 
             S_LOAD_WRITE_DATA : begin
@@ -92,8 +122,16 @@ always_ff @(negedge clk) begin
                 spi_mosi = data_reg[7];
             S_SHIFT_ADDR : 
                 spi_mosi = data_reg[15];
-            S_SHIFT_WRITE_DATA : 
-                spi_mosi = data_reg[31];
+            S_SHIFT_WRITE_DATA : begin
+                if(write_full_word || write_second_half || write_byte_4)
+                    spi_mosi = data_reg[31];
+                if(write_byte_3)
+                    spi_mosi = data_reg[23];
+                if(write_first_half || write_byte_2)
+                    spi_mosi = data_reg[15];
+                if(write_byte_1)
+                    spi_mosi = data_reg[7];
+                end
         endcase
     end
 end 
@@ -135,7 +173,10 @@ begin
             end   
                                
         S_SHIFT_WRITE_DATA : begin
-            if(cycle_counter > 31)
+            if(     ((cycle_counter > 31) && shift_32_bits)
+                ||  ((cycle_counter > 15) && shift_16_bits)
+                ||  ((cycle_counter > 7)  && shift_8_bits))
+                
                 state_next = S_DONE; 
             end   
             
