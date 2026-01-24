@@ -22,3 +22,25 @@ The **example_program** folder contains a sample program to test the SoC in simu
 This example was taken from the official SERV repository:
 
 https://github.com/olofk/serv/tree/main
+
+
+
+# IO
+
+IOs are mapped in SW to address `0x40000000`.
+
+What IOs are used by top module?
+
+Available:
+    - 8 Input
+    - 8 Output
+    - 8 Bidirection
+
+
+Used:
+    - SPI - 4 Out 1 In
+
+Maybe:
+    - 4 GPIO Out + 4 GPIO In
+
+External Reset to SRV core?

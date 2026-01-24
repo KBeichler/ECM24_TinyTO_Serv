@@ -19,7 +19,6 @@ module ECM24_serv_soc_top
  output wire spi_cs1,
  output wire spi_cs2
 );
-
    //=============================================================================
    // Parameters
    //=============================================================================
@@ -73,6 +72,7 @@ module ECM24_serv_soc_top
    //=============================================================================
    // RAM Module - Main memory for the SoC
    //=============================================================================
+   /*
    servant_ram
      #(.memfile (memfile),
        .depth (memsize),
@@ -88,6 +88,27 @@ module ECM24_serv_soc_top
       .i_wb_dat (wb_mem_dat),
       .o_wb_rdt (wb_mem_rdt),
       .o_wb_ack (wb_mem_ack));
+      */
+      
+    spi_sram ram_spi_if(
+    .clk(wb_clk),
+    .rst_n(~wb_rst),
+
+    .cyc(wb_mem_stb),     // cycle valid
+    .adr(wb_mem_adr[15:2]),    // word address (14-bit for 64KB range)
+    .we(wb_mem_we),
+    .dat_i(wb_mem_dat),   // write data
+    .sel(wb_mem_sel),     // byte select
+    .dat_o(wb_mem_rdt),   // read data
+    .ack(wb_mem_ack),     // acknowledge
+
+    // SPI interface
+    .spi_miso(spi_miso),
+    .spi_clk(spi_clk),
+    .spi_mosi(spi_mosi),
+    .spi_cs_n(spi_cs1));
+
+
 
    //=============================================================================
    // GPIO Module - Simple GPIO peripheral for output
