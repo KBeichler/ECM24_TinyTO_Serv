@@ -39,25 +39,24 @@ module sram_23lc512_model (
                 end
 
                 GET_CMD: begin
-                    cmd_reg <= {cmd_reg[6:0], si};
                     if (bit_count == 0) begin
                         state <= GET_ADDR;
-                        bit_count <= 15;
+                        bit_count <= 16;
                     end else begin
                         bit_count <= bit_count - 1;
-                        
+                        cmd_reg <= {cmd_reg[6:0], si};
                     end
                 end
 
-                GET_ADDR: begin
-                    addr_reg <= {addr_reg[14:0], si}; // [cite: 155]
+                GET_ADDR: begin                    
                     if (bit_count == 0) begin
                         state <= DATA_TRANSFER;
                         bit_count <= 7;
-                        current_addr <= {addr_reg[14:0], si};
+                        current_addr <= {addr_reg[14:0]};
                         // Pre-fetch for Read
-                        data_out_buffer <= mem[{addr_reg[14:0], si}];
+                        data_out_buffer <= mem[{addr_reg[14:0]}];
                     end else begin
+                        addr_reg <= {addr_reg[14:0], si}; // [cite: 155]
                         bit_count <= bit_count - 1;
                     end
                 end

@@ -190,7 +190,7 @@ begin
             end
             
         S_DONE : begin
-            if(!cyc)
+            //if(!cyc)
                 state_next = S_IDLE; 
             end
         

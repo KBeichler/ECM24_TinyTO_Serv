@@ -3,6 +3,7 @@
 module soc_top_tb;
 
    parameter memfile = "hello_uart_8b.hex";
+   //parameter memfile = "custom_blink.hex";
    parameter memsize = 8192;
    parameter sim = 0;
    parameter debug = 0;
@@ -38,7 +39,7 @@ module soc_top_tb;
     initial
     begin
    //     $display("Loading RAM from %0s", firmware_file);
-        $readmemh("hello_uart_8b.hex", sram_model.mem);
+        $readmemh(memfile, sram_model.mem);
     end
 
      
