@@ -5,6 +5,7 @@
 // - Full-speed SPI clock (no division)
 // - No byte-swapping (handled in software)
 // - Assumes sequential mode preset on SRAM
+// - Supports byte/halfword/word writes via sel (aligned only)
 
 module spi_sram (
     input  wire        clk,
@@ -15,7 +16,7 @@ module spi_sram (
     input  logic [13:0] adr,        // word address (32-bit words)
     input  logic        we,         // write enable
     input  logic [31:0] dat_i,      // write data
-    input  logic [3:0]  sel,        // byte select (ignored - always 32-bit)
+    input  logic [3:0]  sel,        // byte select
     output logic [31:0] dat_o,      // read data
     output logic        ack,        // acknowledge
 
@@ -42,9 +43,40 @@ module spi_sram (
     logic [31:0] rx_data;       // read data shift register
     logic [5:0]  bit_cnt;       // bit counter
     logic        is_write;      // latched write flag
+    logic [5:0]  data_bits;     // number of data bits to shift (8, 16, or 32)
     
-    // Convert word address to byte address
-    wire [15:0] byte_addr = {adr, 2'b00};
+    // Convert word address to byte address (base)
+    wire [15:0] byte_addr_base = {adr, 2'b00};
+    
+    // Calculate byte offset and data bits based on sel
+    logic [1:0]  byte_offset;
+    logic [5:0]  num_data_bits;
+    logic [31:0] aligned_data;
+    
+    always_comb begin
+        // Default: full word
+        byte_offset   = 2'b00;
+        num_data_bits = 32;
+        aligned_data  = dat_i;
+        
+        if (we) begin
+            case (sel)
+                // Byte writes
+                4'b1000: begin byte_offset = 2'b00; num_data_bits = 8;  aligned_data = {dat_i[31:24], 24'b0}; end
+                4'b0100: begin byte_offset = 2'b01; num_data_bits = 8;  aligned_data = {dat_i[23:16], 24'b0}; end
+                4'b0010: begin byte_offset = 2'b10; num_data_bits = 8;  aligned_data = {dat_i[15:8],  24'b0}; end
+                4'b0001: begin byte_offset = 2'b11; num_data_bits = 8;  aligned_data = {dat_i[7:0],   24'b0}; end
+                // Halfword writes
+                4'b1100: begin byte_offset = 2'b00; num_data_bits = 16; aligned_data = {dat_i[31:16], 16'b0}; end
+                4'b0011: begin byte_offset = 2'b10; num_data_bits = 16; aligned_data = {dat_i[15:0],  16'b0}; end
+                // Word write (default)
+                4'b1111: begin byte_offset = 2'b00; num_data_bits = 32; aligned_data = dat_i; end
+                default: begin byte_offset = 2'b00; num_data_bits = 32; aligned_data = dat_i; end
+            endcase
+        end
+    end
+    
+    wire [15:0] byte_addr = byte_addr_base + {14'b0, byte_offset};
     
     // Shift enable signal
     wire shifting = (state == S_SHIFT_CMD_ADDR) || (state == S_SHIFT_DATA);
@@ -86,16 +118,19 @@ module spi_sram (
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             bit_cnt <= 0;
+            data_bits <= 32;
         end else begin
             case (state)
                 S_IDLE: begin
-                    if (cyc)
+                    if (cyc) begin
                         bit_cnt <= 23;  // 24 bits for cmd+addr
+                        data_bits <= we ? num_data_bits : 32;  // reads always 32 bits
+                    end
                 end
                 
                 S_SHIFT_CMD_ADDR: begin
                     if (bit_cnt == 0)
-                        bit_cnt <= 31;  // 32 bits for data
+                        bit_cnt <= data_bits - 1;  // data bits based on sel
                     else
                         bit_cnt <= bit_cnt - 1;
                 end
@@ -142,7 +177,7 @@ module spi_sram (
             case (state)
                 S_IDLE: begin
                     if (cyc)
-                        tx_data <= dat_i;
+                        tx_data <= aligned_data;
                 end
                 
                 S_SHIFT_DATA: begin
