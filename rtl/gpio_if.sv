@@ -19,20 +19,18 @@ module gpio_if (
         if (i_wb_rst) begin
             o_gpio_out <= 4'b0000;
             o_wb_rdt   <= 32'd0;
-            //o_wb_ack   <= 1'b0;
         end else begin
 
             // Readback always reflects current inputs + latched outputs            
             o_wb_rdt <= {24'd0, i_gpio_in, o_gpio_out};
 
-            if (i_wb_stb) begin
-                if (i_wb_we) begin
-                    // Only low nibble is writable (outputs)
-                    o_gpio_out <= i_wb_dat[3:0];
-                end
+            if (i_wb_stb && i_wb_we) begin
+                // Only low nibble is writable (outputs)
+                o_gpio_out <= i_wb_dat[3:0];
             end
         end
     end
 
+// ack cannot be asserted longer than i_wb_stb, otherwise the Serv Core dies
 assign o_wb_ack = i_wb_stb ? 1'b1 : 1'b0;
 endmodule

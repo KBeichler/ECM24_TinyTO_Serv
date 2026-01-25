@@ -13,11 +13,15 @@ int main(void)
         unsigned int v = *gpio;
 
         // Extract input bits [7:4]
-        unsigned int in = (v >> 4) & 0xF;
+        unsigned char in = (v >> 4) & 0xF;
 
         // Drive outputs [3:0] with inputs
         *gpio = in;
-
+        while(1){
+            // 
+            in ^= 0xF;
+            *gpio = in;
+        }
         // Small delay (roughly a few ms @ ~1 MHz SERV)
         volatile int delay = 10;
         while (delay--) ;
