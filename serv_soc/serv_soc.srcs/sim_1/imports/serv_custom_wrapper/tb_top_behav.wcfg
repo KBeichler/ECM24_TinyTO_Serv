@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="8600000001fs"></ZoomEndTime>
-      <Cursor1Time time="1001000000000fs"></Cursor1Time>
+      <ZoomEndTime time="1609000000001fs"></ZoomEndTime>
+      <Cursor1Time time="4655000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="203"></NameColumnWidth>
-      <ValueColumnWidth column_width="185"></ValueColumnWidth>
+      <ValueColumnWidth column_width="175"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="24" />
+   <WVObjectSize size="32" />
    <wvobject fp_name="/soc_top_tb/q" type="logic">
       <obj_property name="ElementShortName">q</obj_property>
       <obj_property name="ObjectShortName">q</obj_property>
@@ -72,6 +72,11 @@
       <obj_property name="ElementShortName">wb_mem_adr[31:0]</obj_property>
       <obj_property name="ObjectShortName">wb_mem_adr[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/soc_top_tb/dut/ram_spi_if/byte_adr" type="array">
+      <obj_property name="ElementShortName">byte_adr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">byte_adr[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/soc_top_tb/dut/wb_mem_dat" type="array">
       <obj_property name="ElementShortName">wb_mem_dat[31:0]</obj_property>
       <obj_property name="ObjectShortName">wb_mem_dat[31:0]</obj_property>
@@ -83,6 +88,10 @@
    <wvobject fp_name="/soc_top_tb/dut/wb_mem_rdt" type="array">
       <obj_property name="ElementShortName">wb_mem_rdt[31:0]</obj_property>
       <obj_property name="ObjectShortName">wb_mem_rdt[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/soc_top_tb/dut/ram_spi_if/adr" type="array">
+      <obj_property name="ElementShortName">adr[13:0]</obj_property>
+      <obj_property name="ObjectShortName">adr[13:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/soc_top_tb/dut/wb_mem_we" type="logic">
       <obj_property name="ElementShortName">wb_mem_we</obj_property>
@@ -96,24 +105,61 @@
       <obj_property name="ElementShortName">wb_mem_ack</obj_property>
       <obj_property name="ObjectShortName">wb_mem_ack</obj_property>
    </wvobject>
-   <wvobject fp_name="/soc_top_tb/spi_miso" type="logic">
-      <obj_property name="ElementShortName">spi_miso</obj_property>
-      <obj_property name="ObjectShortName">spi_miso</obj_property>
+   <wvobject fp_name="/soc_top_tb/sram_model/state" type="array">
+      <obj_property name="ElementShortName">state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">state[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/soc_top_tb/spi_mosi" type="logic">
-      <obj_property name="ElementShortName">spi_mosi</obj_property>
-      <obj_property name="ObjectShortName">spi_mosi</obj_property>
+   <wvobject fp_name="/soc_top_tb/dut/ram_spi_if/state_reg" type="array">
+      <obj_property name="ElementShortName">state_reg[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state_reg[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/soc_top_tb/sram_model/sck" type="logic">
-      <obj_property name="ElementShortName">sck</obj_property>
-      <obj_property name="ObjectShortName">sck</obj_property>
+   <wvobject type="divider" fp_name="divider26">
+      <obj_property name="label">SPI MOCK</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="group41" type="group">
+      <obj_property name="label">SPI</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/soc_top_tb/spi_miso" type="logic">
+         <obj_property name="ElementShortName">spi_miso</obj_property>
+         <obj_property name="ObjectShortName">spi_miso</obj_property>
+      </wvobject>
+      <wvobject fp_name="/soc_top_tb/spi_mosi" type="logic">
+         <obj_property name="ElementShortName">spi_mosi</obj_property>
+         <obj_property name="ObjectShortName">spi_mosi</obj_property>
+      </wvobject>
+      <wvobject fp_name="/soc_top_tb/sram_model/sck" type="logic">
+         <obj_property name="ElementShortName">sck</obj_property>
+         <obj_property name="ObjectShortName">sck</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/soc_top_tb/sram_model/addr_reg" type="array">
       <obj_property name="ElementShortName">addr_reg[15:0]</obj_property>
       <obj_property name="ObjectShortName">addr_reg[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/soc_top_tb/sram_model/cmd_reg" type="array">
+      <obj_property name="ElementShortName">cmd_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">cmd_reg[7:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/soc_top_tb/sram_model/state" type="array">
       <obj_property name="ElementShortName">state[31:0]</obj_property>
       <obj_property name="ObjectShortName">state[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/soc_top_tb/sram_model/bit_count" type="array">
+      <obj_property name="ElementShortName">bit_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bit_count[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/soc_top_tb/sram_model/addr_reg" type="array">
+      <obj_property name="ElementShortName">addr_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/soc_top_tb/sram_model/current_addr" type="array">
+      <obj_property name="ElementShortName">current_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">current_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/soc_top_tb/sram_model/data_out_buffer" type="array">
+      <obj_property name="ElementShortName">data_out_buffer[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out_buffer[7:0]</obj_property>
    </wvobject>
 </wave_config>
