@@ -8,7 +8,6 @@ https://github.com/olofk/serv/tree/main
 - [ ] Check correct RAM size and set stack pointer in start.S
 - [ ] verify spi_sram.sv with real hardware. Reading and writing
 - [ ] check if reset has correct polarity for ASIC (SERV reset is active high)
-- [ ] now we uses sysclk for SPI -> should we change that?
 
 
 ## Vivado Project
@@ -21,10 +20,10 @@ All RTL code needed for the system is int he **rtl subfolder**:
     - SERV core with servile wrapper
     - `rf_ram_if` and `RAM32` macro
     - Wishbone interface to SPI SRAM `spi_sram`
-    - `subservient_gpio`
+    - `gpio_if`
         - the servile wrapper maps all addresses higher than `0x40000000` to the external Wishbone bus
-        - currently a single GPIO can be accessed by writing to this address
-        - a custom Wishbone–IO module may be implemented here
+        - currently 4 input and 4 outputs are mapped to the 8 bits of address  `0x40000000`
+            - [3:0] Output, [7:4] Input
     
 All testbench code is located in the **tb** folder.
 
