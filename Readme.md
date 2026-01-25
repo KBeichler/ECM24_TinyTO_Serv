@@ -1,5 +1,10 @@
 # ECM24 SERV Core
 
+# TODO
+
+- [ ] Check correct RAM size and set stack pointer in start.S
+- [ ] verify spi_sram.sv with real hardware. Reading and writing
+
 ## Vivado Project
 
 The **serv_soc** folder contains the Vivado project with the SoC.

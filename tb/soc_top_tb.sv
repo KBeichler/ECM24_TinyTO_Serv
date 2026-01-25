@@ -2,8 +2,8 @@
 `default_nettype none
 module soc_top_tb;
 
-   parameter memfile = "hello_uart_8b.hex";
-   //parameter memfile = "custom_blink.hex";
+   //parameter memfile = "hello_uart_8b.hex";
+   parameter memfile = "main.hex";
    parameter memsize = 8192;
    parameter sim = 0;
    parameter debug = 0;

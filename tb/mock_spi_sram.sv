@@ -8,7 +8,7 @@ module sram_23lc512_model (
 );
 
     // Memory Organization: 64K x 8-bit [cite: 16]
-    logic [7:0] mem [0:1024]; 
+    logic [7:0] mem [0:4096]; 
 
     // Internal registers
     logic [7:0]  cmd_reg;
