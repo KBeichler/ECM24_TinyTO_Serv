@@ -4,6 +4,9 @@
 
 - [ ] Check correct RAM size and set stack pointer in start.S
 - [ ] verify spi_sram.sv with real hardware. Reading and writing
+- [ ] check if reset has correct polarity for ASIC
+
+
 
 ## Vivado Project
 
