@@ -3,7 +3,7 @@
 module soc_top_tb;
 
    //parameter memfile = "hello_uart_8b.hex";
-   parameter memfile = "main.hex";
+   parameter memfile = "blink.hex";
    parameter memsize = 8192;
    parameter sim = 0;
    parameter debug = 0;
@@ -66,7 +66,8 @@ module soc_top_tb;
    );
 
    // Instantiate SRAM model and connect to DUT
-   sram_23lc512_model sram_model (
+   sram_23lc512_model# (
+        .memsize(memsize)) sram_model (
        .sck(spi_clk),
        .cs_n(spi_cs1),
        .si(spi_mosi),

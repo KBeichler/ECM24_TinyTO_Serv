@@ -1,35 +1,37 @@
 # ECM24 SERV Core
 
+https://github.com/olofk/serv/tree/main
+
+
 # TODO
 
 - [ ] Check correct RAM size and set stack pointer in start.S
 - [ ] verify spi_sram.sv with real hardware. Reading and writing
-- [ ] check if reset has correct polarity for ASIC
-
+- [ ] check if reset has correct polarity for ASIC (SERV reset is active high)
+- [ ] now we uses sysclk for SPI -> should we change that?
 
 
 ## Vivado Project
 
-The **serv_soc** folder contains the Vivado project with the SoC.
+The **vivado_prj** folder contains the Vivado project with the SoC.
+
+All RTL code needed for the system is int he **rtl subfolder**:
 
 - `ECM24_serv_soc_top`: instantiates all modules
     - SERV core with servile wrapper
     - `rf_ram_if` and `RAM32` macro
-    - Wishbone interface to RAM
-        - currently uses *servant_ram* for simulation testing
-        - this should be replaced with an SPI–RAM interface
+    - Wishbone interface to SPI SRAM `spi_sram`
     - `subservient_gpio`
         - the servile wrapper maps all addresses higher than `0x40000000` to the external Wishbone bus
         - currently a single GPIO can be accessed by writing to this address
         - a custom Wishbone–IO module may be implemented here
+    
+All testbench code is located in the **tb** folder.
+
 
 ## Example Programs
 
-The **example_program** folder contains a sample program to test the SoC in simulation. This program is loaded into the *servant_ram* module when the simulation starts.
-
-This example was taken from the official SERV repository:
-
-https://github.com/olofk/serv/tree/main
+The **sw** folder contains sample programs to test the SoC in simulation. Any c file can be build with the command `make SRC=my_custom_file.c`. These programs can be loaded into the *SRAM_Mock* module when the simulation starts in `soc_top_tb.sv`.
 
 
 

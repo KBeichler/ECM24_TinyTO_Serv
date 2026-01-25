@@ -1,6 +1,8 @@
 `timescale 1ns / 1ps
 
-module sram_23lc512_model (
+module sram_23lc512_model #(
+    parameter memsize = 8192)               // RAM size in bytes
+   (
     input  logic sck,   // Serial Clock [cite: 37]
     input  logic cs_n,  // Chip Select (active low) [cite: 31, 37]
     input  logic si,    // Serial Data Input [cite: 30, 37]

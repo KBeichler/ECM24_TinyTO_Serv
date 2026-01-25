@@ -22,8 +22,6 @@ module ECM24_serv_soc_top
    //=============================================================================
    // Parameters
    //=============================================================================
-   parameter memfile = "";  // Initial memory content file
-   parameter memsize = 8192;               // RAM size in bytes
    parameter reset_strategy = "MINI";      // Reset strategy for RAM
    parameter width = 1;                    // SERV CPU width (bit-serial)
    parameter sim = 0;                      // Simulation mode flag
@@ -72,23 +70,6 @@ module ECM24_serv_soc_top
    //=============================================================================
    // RAM Module - Main memory for the SoC
    //=============================================================================
-   /*
-   servant_ram
-     #(.memfile (memfile),
-       .depth (memsize),
-       .RESET_STRATEGY (reset_strategy))
-   ram
-     (// Wishbone interface
-      .i_wb_clk (wb_clk),
-      .i_wb_rst (wb_rst),
-      .i_wb_adr (wb_mem_adr[$clog2(memsize)-1:2]),
-      .i_wb_cyc (wb_mem_stb),
-      .i_wb_we  (wb_mem_we) ,
-      .i_wb_sel (wb_mem_sel),
-      .i_wb_dat (wb_mem_dat),
-      .o_wb_rdt (wb_mem_rdt),
-      .o_wb_ack (wb_mem_ack));
-      */
       
     spi_sram ram_spi_if(
     .clk(wb_clk),
