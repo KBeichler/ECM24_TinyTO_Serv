@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="40" Path="C:/Users/Kevin/Desktop/soc/TinyTO/serv_soc/serv_soc.xpr">
+<Project Version="7" Minor="40" Path="C:/Users/Kevin/Desktop/soc/TinyTO/vivado_prj/vivado_prj.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="f4d4354620954969b0adfbdbf7d697d4"/>
+    <Option Name="Id" Val="c6e03dbe3dd2468ab3da60ac685098b4"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -36,7 +36,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="zybo"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="322"/>
+    <Option Name="WTXSimLaunchSim" Val="323"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -64,254 +64,162 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sources_1/new/RAM32.v">
+      <File Path="$PPRDIR/../rtl/RAM32.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_aligner.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_aligner.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_alu.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_alu.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_bufreg.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_bufreg.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_bufreg2.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_bufreg2.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_compdec.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_compdec.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_csr.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_csr.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_ctrl.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_ctrl.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_debug.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_debug.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_decode.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_decode.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_immdec.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_immdec.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_mem_if.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_mem_if.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_rf_if.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_rf_if.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_rf_ram_if.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_rf_ram_if.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_state.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_state.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/serv/rtl/serv_top.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/rtl/serv_top.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/servile/servile.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/servile/servile.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/servile/servile_arbiter.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/servile/servile_arbiter.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/servile/servile_mux.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/servile/servile_mux.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/rtl/subservient_gpio.v">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../subservient-main/rtl/subservient_gpio.v"/>
-          <Attr Name="ImportTime" Val="1768040781"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/serv_ram32_if.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_aligner.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../spi_memory/spi_sram.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_alu.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/ECM24_serv_soc_top.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_bufreg.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../spi_memory/chat_spi_sram.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_bufreg2.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/servant/servant_ram.v">
+      <File Path="$PPRDIR/../rtl/serv/serv_compdec.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/servant/servant_ram.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/bench/uart_decoder.v">
+      <File Path="$PPRDIR/../rtl/serv/serv_csr.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/bench/uart_decoder.v"/>
-          <Attr Name="ImportTime" Val="1767365476"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/servant/servant_gpio.v">
+      <File Path="$PPRDIR/../rtl/serv/serv_ctrl.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv/servant/servant_gpio.v"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/soc_top_tb.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_debug.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../spi_memory/mock_spi_sram.sv">
+      <File Path="$PPRDIR/../rtl/serv/serv_decode.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_immdec.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_mem_if.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_rf_if.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_rf_ram_if.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_state.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/serv_top.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/servile.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/servile_arbiter.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv/servile_mux.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/subservient_gpio.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/serv_ram32_if.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/spi_sram.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../rtl/ECM24_serv_soc_top.sv">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -320,8 +228,6 @@
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="ECM24_serv_soc_top"/>
-        <Option Name="TopLib" Val="xil_defaultlib"/>
-        <Option Name="TopRTLFile" Val="$PSRCDIR/sources_1/new/ECM24_serv_soc_top.sv"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
@@ -340,21 +246,33 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sim_1/imports/serv_custom_wrapper/tb_top_behav.wcfg">
+      <File Path="$PPRDIR/../tb/uart_decoder.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../serv_custom_wrapper/tb_top_behav.wcfg"/>
-          <Attr Name="ImportTime" Val="1767368725"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/imports/example_program/hello_uart.hex">
+      <File Path="$PPRDIR/../tb/mock_spi_sram.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../example_program/hello_uart.hex"/>
-          <Attr Name="ImportTime" Val="1767365477"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../example_program/hello_uart_8b.hex"/>
-      <File Path="$PPRDIR/../c_prog2/custom_blink.hex"/>
+      <File Path="$PPRDIR/../tb/soc_top_tb.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../tb/tb_top_behav.wcfg">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../c_prog/example_program/hello_uart_8b.hex"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="soc_top_tb"/>
