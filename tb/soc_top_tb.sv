@@ -26,9 +26,9 @@ module soc_top_tb;
    wire spi_cs1;
    wire spi_cs2;
 
-   // 16 MHZ clock
-   always  #31 wb_clk <= !wb_clk;
-   initial #124 wb_rst <= 1'b0;
+   // 1 MHZ clock
+   always  #500 wb_clk <= !wb_clk;
+   initial #1000 wb_rst <= 1'b0;
 
 
    uart_decoder #(baud_rate) uart_decoder (q);

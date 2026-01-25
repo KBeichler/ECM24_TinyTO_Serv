@@ -8,6 +8,7 @@ int main(void) {
 
     while (1)
     {
+        // ~ 7 ms @ 1 MHz CPU and SPI clock
         volatile int delay = 10;
         while(delay--) ;
         *gpio = 0;
