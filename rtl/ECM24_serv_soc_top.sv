@@ -11,7 +11,8 @@ module ECM24_serv_soc_top
 (
  input wire  wb_clk,    // Wishbone clock
  input wire  wb_rst,    // Wishbone reset
- output wire q,          // GPIO output
+ input  wire [3:0]  gpio_in,
+ output wire [3:0]  gpio_out,       // GPIO output
 
  input wire spi_miso,
  output wire spi_mosi,
@@ -94,6 +95,7 @@ module ECM24_serv_soc_top
    //=============================================================================
    // GPIO Module - Simple GPIO peripheral for output
    //=============================================================================
+   /*
    subservient_gpio gpio
      (.i_wb_clk (wb_clk),
       .i_wb_rst (wb_rst),
@@ -102,7 +104,22 @@ module ECM24_serv_soc_top
       .i_wb_stb (wb_ext_stb),
       .o_wb_rdt (wb_ext_rdt),
       .o_wb_ack (wb_ext_ack),
-      .o_gpio   (q));
+      .o_gpio   (gpio_out[0]));
+      */
+     gpio_if  u_gpio_if (
+      .i_wb_clk  (wb_clk),
+      .i_wb_rst  (wb_rst),
+
+      .i_wb_adr  (wb_ext_adr),
+      .i_wb_dat  (wb_ext_dat),
+      .i_wb_we   (wb_ext_we),
+      .i_wb_stb  (wb_ext_stb),
+      .o_wb_rdt  (wb_ext_rdt),
+      .o_wb_ack  (wb_ext_ack),
+
+      .i_gpio_in (gpio_in),
+      .o_gpio_out(gpio_out)
+   );
 
    //=============================================================================
    // Register File RAM - RAM32 macro with interface

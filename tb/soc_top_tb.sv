@@ -3,7 +3,8 @@
 module soc_top_tb;
 
    //parameter memfile = "hello_uart_8b.hex";
-   parameter memfile = "blink.hex";
+   //parameter memfile = "blink.hex";
+   parameter memfile = "gpio_test.hex";
    parameter memsize = 8192;
    parameter sim = 0;
    parameter debug = 0;
@@ -25,13 +26,16 @@ module soc_top_tb;
    wire spi_clk;
    wire spi_cs1;
    wire spi_cs2;
+   
+    wire [3:0]  gpio_in;
+    wire [3:0]  gpio_out;       // GPIO output
 
    // 1 MHZ clock
    always  #500 wb_clk <= !wb_clk;
    initial #1000 wb_rst <= 1'b0;
 
 
-   uart_decoder #(baud_rate) uart_decoder (q);
+   uart_decoder #(baud_rate) uart_decoder (gpio_out[0]);
 
    reg [1023:0] firmware_file;
    
@@ -43,7 +47,7 @@ module soc_top_tb;
     end
 
      
-
+    assign gpio_in = 4'b0100;
 
    ECM24_serv_soc_top
      #(.memfile  (memfile),
@@ -57,7 +61,8 @@ module soc_top_tb;
    dut(
        .wb_clk(wb_clk),
        .wb_rst(wb_rst), 
-       .q(q),
+       .gpio_in(gpio_in),
+       .gpio_out(gpio_out),
        .spi_miso(spi_miso),
        .spi_mosi(spi_mosi),
        .spi_clk(spi_clk),
