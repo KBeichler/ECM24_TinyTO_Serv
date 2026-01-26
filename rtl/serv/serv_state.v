@@ -4,6 +4,7 @@
  * SPDX-FileCopyrightText: 2019 Olof Kindgren <olof@award-winning.me>
  * SPDX-License-Identifier: ISC
  */
+ `timescale 1ns/1ps
 module serv_state
   #(parameter RESET_STRATEGY = "MINI",
     parameter [0:0] WITH_CSR = 1,

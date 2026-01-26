@@ -4,6 +4,7 @@
  * SPDX-FileCopyrightText: 2022 Olof Kindgren <olof@award-winning.me>
  * SPDX-License-Identifier: ISC
  */
+ `timescale 1ns/1ps 
 module serv_bufreg2
   #(parameter W = 1,
     //Internally calculated. Do not touch

@@ -5,7 +5,7 @@
  * SPDX-FileCopyrightText: 2024 Olof Kindgren <olof.kindgren@gmail.com>
  * SPDX-License-Identifier: Apache-2.0
  */
-
+`timescale 1ns/1ps
 module servile_arbiter
   (
    input wire [31:0]  i_wb_cpu_dbus_adr,

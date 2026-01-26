@@ -4,6 +4,7 @@
  * SPDX-FileCopyrightText: 2024 Olof Kindgren <olof@award-winning.me>
  * SPDX-License-Identifier: ISC
  */
+ `timescale 1ns/1ps
 module serv_debug
   #(parameter W = 1,
     parameter RESET_PC = 0,

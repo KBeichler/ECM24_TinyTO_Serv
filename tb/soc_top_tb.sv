@@ -49,25 +49,22 @@ module soc_top_tb;
      
     assign gpio_in = 4'b0100;
 
-   ECM24_serv_soc_top
-     #(.memfile  (memfile),
-       .memsize  (memsize),
-       .width    (width),
+   tt_um_ECM24_serv_soc_top     
+   #(  .width    (width),
        .debug    (debug),
        .sim      (sim),
        .with_csr (with_csr),
        .compress (compressed[0:0]),
        .align    (align[0:0]))
-   dut(
-       .wb_clk(wb_clk),
-       .wb_rst(wb_rst), 
-       .gpio_in(gpio_in),
-       .gpio_out(gpio_out),
-       .spi_miso(spi_miso),
-       .spi_mosi(spi_mosi),
-       .spi_clk(spi_clk),
-       .spi_cs1(spi_cs1),
-       .spi_cs2(spi_cs2)
+    dut(
+    .ui_in({gpio_in, 3'b000, spi_miso}),    // Dedicated inputs
+    .uo_out({gpio_out, spi_cs2, spi_cs1, spi_clk, spi_mosi }),   // Dedicated outputs
+    .uio_in(),   // IOs: Input path
+    .uio_out(),  // IOs: Output path
+    .uio_oe(),   // IOs: Enable path (active high: 0=input, 1=output)
+    .ena(1'b1),
+    .clk(wb_clk),
+    .rst_n(~wb_rst)
    );
 
    // Instantiate SRAM model and connect to DUT

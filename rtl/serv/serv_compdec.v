@@ -6,7 +6,7 @@ SPDX-License-Identifier: Apache-2.0
 * Adapted to SERV by @Abdulwadoodd as part of the project under spring '22 LFX Mentorship program */
 
 /* Decodes RISC-V compressed instructions into their RV32i equivalent. */
-
+`timescale 1ns/1ps 
 module serv_compdec
   (
    input wire i_clk,

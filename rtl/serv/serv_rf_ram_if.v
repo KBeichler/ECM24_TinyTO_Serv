@@ -4,6 +4,7 @@
  * SPDX-FileCopyrightText: 2019 Olof Kindgren <olof@award-winning.me>
  * SPDX-License-Identifier: ISC
  */
+ `timescale 1ns/1ps
 `default_nettype none
 module serv_rf_ram_if
   #(//Data width. Adjust to preferred width of SRAM data interface

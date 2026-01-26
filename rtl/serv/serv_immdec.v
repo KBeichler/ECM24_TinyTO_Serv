@@ -4,6 +4,7 @@
  * SPDX-FileCopyrightText: 2020 Olof Kindgren <olof@award-winning.me>
  * SPDX-License-Identifier: ISC
  */
+ `timescale 1ns/1ps
 `default_nettype none
 module serv_immdec
   #(parameter SHARED_RFADDR_IMM_REGS = 1,

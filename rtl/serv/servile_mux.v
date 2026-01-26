@@ -4,7 +4,7 @@
  * SPDX-FileCopyrightText: 2024 Olof Kindgren <olof.kindgren@gmail.com>
  * SPDX-License-Identifier: Apache-2.0
  */
-
+`timescale 1ns/1ps
 module servile_mux
   #(parameter [0:0]  sim = 1'b0, //Enable simulation features
     parameter [31:0] sim_sig_adr = 32'h80000000,

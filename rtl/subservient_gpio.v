@@ -4,7 +4,7 @@
  * SPDX-FileCopyrightText: 2021 Olof Kindgren <olof.kindgren@gmail.com>
  * SPDX-License-Identifier: Apache-2.0
  */
-
+`timescale 1ns/1ps 
 module subservient_gpio
   (input wire i_wb_clk,
    input wire i_wb_rst,

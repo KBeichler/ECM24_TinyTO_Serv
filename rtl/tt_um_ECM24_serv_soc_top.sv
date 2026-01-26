@@ -1,25 +1,30 @@
+/*
+ * Copyright (c) 2026 FH Joanneum
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+`default_nettype none
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Module: ECM24_serv_soc_top
-// Description: SERV RISC-V SoC top-level module
+// Module: tt_um_ECM24_serv_soc_top
+// Description: SERV RISC-V SoC top-level module for TinyTapeout
 //              Integrates SERV CPU core with RAM and GPIO peripherals
 // 
 // Create Date: 17.01.2026 11:15:30
 //////////////////////////////////////////////////////////////////////////////////
 
-module ECM24_serv_soc_top
+module tt_um_ECM24_serv_soc_top
 (
- input wire  wb_clk,    // Wishbone clock
- input wire  wb_rst,    // Wishbone reset
- input  wire [3:0]  gpio_in,
- output wire [3:0]  gpio_out,       // GPIO output
-
- input wire spi_miso,
- output wire spi_mosi,
- output wire spi_clk,
- output wire spi_cs1,
- output wire spi_cs2
+ input  wire [7:0] ui_in,    // Dedicated inputs
+ output wire [7:0] uo_out,   // Dedicated outputs
+ input  wire [7:0] uio_in,   // IOs: Input path
+ output wire [7:0] uio_out,  // IOs: Output path
+ output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
+ input  wire       ena,      // always 1 when the design is powered, so you can ignore it
+ input  wire       clk,      // clock
+ input  wire       rst_n     // reset_n - low to reset
 );
+
    //=============================================================================
    // Parameters
    //=============================================================================
@@ -35,6 +40,35 @@ module ECM24_serv_soc_top
    localparam csr_regs = with_csr*4;      // Number of CSR registers
    localparam rf_width = 32;              // Register file width
    localparam rf_l2d = $clog2(rf_width);  // Register file depth
+
+   //=============================================================================
+   // Pin Mapping
+   //=============================================================================
+   // Inputs
+   wire spi_miso = ui_in[0];
+   wire gpio_module_in = ui_in[7:4];
+   wire gpio_module_out  = uo_out[7:4];
+   
+   // Outputs
+   wire gpio_out;
+   wire spi_mosi;
+   wire spi_clk;
+   wire spi_cs1_n;
+   wire spi_cs2_n;
+   assign spi_cs2_n = 1'b1;
+   
+   assign uo_out[0] = spi_mosi;
+   assign uo_out[1] = spi_clk;
+   assign uo_out[2] = spi_cs1_n;
+   assign uo_out[3] = spi_cs2_n;
+   
+   // Bidirectional pins not used
+   assign uio_out = 8'b0;
+   assign uio_oe  = 8'b0;
+   
+   // Internal clock and reset
+   wire wb_clk = clk;
+   wire wb_rst = ~rst_n;
 
    //=============================================================================
    // Wishbone Memory Bus Signals (CPU <-> RAM)
@@ -74,7 +108,7 @@ module ECM24_serv_soc_top
       
     spi_sram ram_spi_if(
     .clk(wb_clk),
-    .rst_n(~wb_rst),
+    .rst_n(rst_n),
 
     .cyc(wb_mem_stb),     // cycle valid
     .adr(wb_mem_adr[15:2]),    // word address (14-bit for 64KB range)
@@ -88,24 +122,13 @@ module ECM24_serv_soc_top
     .spi_miso(spi_miso),
     .spi_clk(spi_clk),
     .spi_mosi(spi_mosi),
-    .spi_cs_n(spi_cs1));
-
-
+    .spi_cs_n(spi_cs1_n));
 
    //=============================================================================
    // GPIO Module - Simple GPIO peripheral for output
    //=============================================================================
-   /*
-   subservient_gpio gpio
-     (.i_wb_clk (wb_clk),
-      .i_wb_rst (wb_rst),
-      .i_wb_dat (wb_ext_dat[0]),
-      .i_wb_we  (wb_ext_we),
-      .i_wb_stb (wb_ext_stb),
-      .o_wb_rdt (wb_ext_rdt),
-      .o_wb_ack (wb_ext_ack),
-      .o_gpio   (gpio_out[0]));
-      */
+
+      
      gpio_if  u_gpio_if (
       .i_wb_clk  (wb_clk),
       .i_wb_rst  (wb_rst),
@@ -117,8 +140,8 @@ module ECM24_serv_soc_top
       .o_wb_rdt  (wb_ext_rdt),
       .o_wb_ack  (wb_ext_ack),
 
-      .i_gpio_in (gpio_in),
-      .o_gpio_out(gpio_out)
+      .i_gpio_in (ui_in[7:4]),
+      .o_gpio_out(uo_out[7:4])
    );
 
    //=============================================================================
@@ -152,13 +175,17 @@ module ECM24_serv_soc_top
 
    // RAM32 Macro Instance
    RAM32 rf_ram
-     (.CLK (wb_clk),
-      .WE0 (ram32_we),
-      .EN0 (ram32_en),
-      .A0  (ram32_addr),
-      .Di0 (ram32_din),
-      .Do0 (ram32_dout));
-
+     (
+`ifdef USE_POWER_PINS
+      .VPWR (1'b1),
+      .VGND (1'b0),
+`endif
+      .CLK  (wb_clk),
+      .WE0  (ram32_we),
+      .EN0  (ram32_en),
+      .A0   (ram32_addr),
+      .Di0  (ram32_din),
+      .Do0  (ram32_dout));
 
    //=============================================================================
    // SERV CPU Core - Bit-serial RISC-V CPU
@@ -175,7 +202,7 @@ module ECM24_serv_soc_top
      (
       .i_clk        (wb_clk),
       .i_rst        (wb_rst),
-      .i_timer_irq  (0'b0),
+      .i_timer_irq  (1'b0),
 
       .o_wb_mem_adr   (wb_mem_adr),
       .o_wb_mem_dat   (wb_mem_dat),
@@ -200,5 +227,7 @@ module ECM24_serv_soc_top
       .o_rf_ren    (rf_ren),
       .i_rf_rdata  (rf_rdata));
 
+   // List all unused inputs to prevent warnings
+   wire _unused = &{ena, ui_in[7:6], uio_in, 1'b0};
 
 endmodule
