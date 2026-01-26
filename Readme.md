@@ -7,8 +7,15 @@ https://github.com/olofk/serv/tree/main
 
 - [ ] Check correct RAM size and set stack pointer in start.S
 - [ ] verify spi_sram.sv with real hardware. Reading and writing
-- [ ] check if reset has correct polarity for ASIC (SERV reset is active high)
 
+- [x] check if reset has correct polarity for ASIC (SERV reset is active high)
+- [ ] check pinout again -> TinyTO breakout board https://tinytapeout.com/specs/pinouts/
+    - [ ] Could use RP2040 for RAM emulation https://github.com/MichaelBell/spi-ram-emu 
+    - [ ] compability to PMOD extensions (uart)
+- [ ] we have space -> more peripherals? UART?
+- [ ] Do we use RAM32 macro right now? or just FFs
+
+- [ ] QSPI Ram IF?
 
 ## Vivado Project
 
