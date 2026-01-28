@@ -12,8 +12,8 @@ bool read_word(uint32_t word_addr, uint32_t *out_value);
 void u32_to_hex(uint32_t value, char *buffer);
 
 //include data
-#define START_ADDRESS 0
-#define SRAM_DATA_SIZE 16
+#define START_ADDRESS 0   //word address
+#define SRAM_DATA_SIZE 25 //number of words
 uint32_t sram_data[SRAM_DATA_SIZE] = {
 #include "sram_data.h"
 };
